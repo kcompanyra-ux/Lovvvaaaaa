@@ -34,22 +34,18 @@
     <button class="fn" data-action="sign">+/-</button>
     <button class="fn" data-action="percent">%</button>
     <button class="op" data-op="/">÷</button>
-    
     <button data-num="7">7</button>
     <button data-num="8">8</button>
     <button data-num="9">9</button>
     <button class="op" data-op="*">×</button>
-    
     <button data-num="4">4</button>
     <button data-num="5">5</button>
     <button data-num="6">6</button>
     <button class="op" data-op="-">−</button>
-    
     <button data-num="1">1</button>
     <button data-num="2">2</button>
     <button data-num="3">3</button>
     <button class="op" data-op="+">+</button>
-    
     <button class="zero" data-num="0">0</button>
     <button data-action="dot">.</button>
     <button class="op" data-action="equals">=</button>
@@ -57,7 +53,34 @@
 </div>
 
 <script>
-var _0x1a=["\x63\x6C\x65\x61\x72","\x73\x69\x67\x6E","\x70\x65\x72\x63\x65\x6E\x74","\x64\x6F\x74","\x65\x71\x75\x61\x6C\x73","\x6E\x75\x6D","\x6F\x70","\x61\x63\x74\x69\x6F\x6E"],c="0",p=null,o=null,j=!1,d=document.getElementById("d"),h=document.getElementById("h");function u(){d.textContent=c;h.textContent=(p&&o)?`${p}\x20${{"+": "+", "-": "\u2212", "*": "\u00d7", "/": "\u00f7"}[o]}`:"";}function i(n){j&&(c="0",j=!1);c=c==="0"?n:(c.length<15?c+n:c);u();}function dt(){c.includes(".")||(c+=".");u();}function ca(){c="0";p=null;o=null;j=!1;u();}function ts(){c=c.startsWith("-")?c.slice(1):"-"+c;u();}function pc(){c=String(parseFloat(c)/100);u();}function cm(a,b,op){switch(op){case"+":return a+b;case"-":return a-b;case"*":return a*b;case"/":return b===0?"Error":a/b;}}function so(op){if(o&&!j&&p!==null){let r=cm(parseFloat(p),parseFloat(c),o);if(r==="Error"){c="Error";u();return;}c=String(r);u();}p=c;o=op;j=!0;h.textContent=`${p}\x20${{"+": "+", "-": "\u2212", "*": "\u00d7", "/": "\u00f7"}[op]}`;}function eq(){if(o===null||p===null)return;let r=cm(parseFloat(p),parseFloat(c),o),s={"+": "+", "-": "\u2212", "*": "\u00d7", "/": "\u00f7"}[o];h.textContent=`${p}\x20${s}\x20${c}\x20=`;c=r==="Error"?"Error":String(+r.toFixed(10));o=null;p=null;j=!0;u();}document.querySelectorAll("button").forEach(b=>{b.addEventListener("click",()=>{if(c==="Error")ca();if(b.dataset[_0x1a[5]]!==undefined)i(b.dataset[_0x1a[5]]);else if(b.dataset[_0x1a[6]])so(b.dataset[_0x1a[6]]);else if(b.dataset[_0x1a[7]]===_0x1a[0])ca();else if(b.dataset[_0x1a[7]]===_0x1a[1])ts();else if(b.dataset[_0x1a[7]]===_0x1a[2])pc();else if(b.dataset[_0x1a[7]]===_0x1a[3])dt();else if(b.dataset[_0x1a[7]]===_0x1a[4])eq();});});document.addEventListener("keydown",e=>{if(c==="Error")ca();if(/^[0-9]$/.test(e.key))i(e.key);else if(e.key===".")dt();else if(["+", "-", "*", "/"].includes(e.key))so(e.key);else if(e.key==="Enter"||e.key==="="){e.preventDefault();eq();}else if(e.key==="Escape")ca();else if(e.key==="Backspace"){c=c.length>1?c.slice(0,-1):"0";u();}});u();
+  // Layer 1: UI Extraction Deterrents
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || 
+       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+       (e.ctrlKey && e.key === 'U')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Layer 2: Anti-Debugging Trap (Causes lag/freezing if DevTools is opened)
+  setInterval(() => {
+    const _t = performance.now();
+    debugger;
+    if (performance.now() - _t > 100) {
+      document.body.innerHTML = ''; 
+    }
+  }, 1500);
+
+  // Layer 3: Base64 Encoded Payload + Dynamic Execution
+  // The actual calculator logic is hidden inside this string and evaluated at runtime.
+  try {
+    const _payload = atob("dmFyIGM9IjAiLHA9bnVsbCxvPW51bGwsaj0hMSxkPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkIiksaD1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiaCIpO2Z1bmN0aW9uIHUoKXtkLnRleHRDb250ZW50PWM7aC50ZXh0Q29udGVudD0ocCYmbyk/cCsiICIreyIrIjoiKyIsIi0iOiJcdTIyMTIiLCIqIjoiXHUwMGQ3IiwiLyI6Ilx1MDBmNyJ9W29dOiIiO31mdW5jdGlvbiBpKG4pe2omJihjPSIwIixqPSExKTtjPWM9PT0iMCI/bjooYy5sZW5ndGg8MTU/YytuOmMpO3UoKTt9ZnVuY3Rpb24gZHQoKXtjLmluY2x1ZGVzKCIuIil8fChjKz0iLiIpO3UoKTt9ZnVuY3Rpb24gY2EoKXtjPSIwIjtwPW51bGw7bz1udWxsO2o9ITE7dSgpO31mdW5jdGlvbiB0cygpe2M9Yy5zdGFydHNXaXRoKCItIik/Yy5zbGljZSgxKToiLSIrYzt1KCk7fWZ1bmN0aW9uIHBjKCl7Yz1TdHJpbmcocGFyc2VGbG9hdChjKS8xMDApO3UoKTt9ZnVuY3Rpb24gY20oYSxiLG9wKXtzd2l0Y2gob3Ape2Nhc2UiKyI6cmV0dXJuIGErYjtjYXNlIi0iOnJldHVybiBhLWI7Y2FzZSIqIjpyZXR1cm4gYSpiO2Nhc2UiLyI6cmV0dXJuIGI9PT0wPyJFcnJvciI6YS9iO319ZnVuY3Rpb24gc28ob3Ape2lmKG8mJiFqJiZwIT09bnVsbCl7dmFyIHI9Y20ocGFyc2VGbG9hdChwKSxwYXJzZUZsb2F0KGMpLG8pO2lmKHI9PT0iRXJyb3IiKXtjPSJFcnJvciI7dSgpO3JldHVybjt9Yz1TdHJpbmcocik7dSgpO31wPWM7bz1vcDtqPSEwO2gudGV4dENvbnRlbnQ9cCsiICIreyIrIjoiKyIsIi0iOiJcdTIyMTIiLCIqIjoiXHUwMGQ3IiwiLyI6Ilx1MDBmNyJ9W29wXTt9ZnVuY3Rpb24gZXEoKXtpZihvPT09bnVsbHx8cD09PW51bGwpcmV0dXJuO3ZhciByPWNtKHBhcnNlRmxvYXQocCkscGFyc2VGbG9hdChjKSxvKSxzPXsiKyI6IisiLCItIjoiXHUyMjEyIiwiKiI6Ilx1MDBkNyIsIi8iOiJcdTAwZjcifVtvXTtoLnRleHRDb250ZW50PXArIiAiK3MrIiAiK2MrIiA9IjtjPXI9PT0iRXJyb3IiPyJFcnJvciI6U3RyaW5nKCtyLnRvRml4ZWQoMTApKTtvPW51bGw7cD1udWxsO2o9ITA7dSgpO31kb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJidXR0b24iKS5mb3JFYWNoKGZ1bmN0aW9uKGIpe2IuYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLGZ1bmN0aW9uKCl7aWYoYz09PSJFcnJvciIpY2EoKTtpZihiLmRhdGFzZXQubnVtIT09dW5kZWZpbmVkKWkoYi5kYXRhc2V0Lm51bSk7ZWxzZSBpZihiLmRhdGFzZXQub3Apc28oYi5kYXRhc2V0Lm9wKTtlbHNlIGlmKGIuZGF0YXNldC5hY3Rpb249PT0iY2xlYXIiKWNhKCk7ZWxzZSBpZihiLmRhdGFzZXQuYWN0aW9uPT09InNpZ24iKXRzKCk7ZWxzZSBpZihiLmRhdGFzZXQuYWN0aW9uPT09InBlcmNlbnQiKXBjKCk7ZWxzZSBpZihiLmRhdGFzZXQuYWN0aW9uPT09ImRvdCIpZHQoKTtlbHNlIGlmKGIuZGF0YXNldC5hY3Rpb249PT0iZXF1YWxzIillcSgpO30pO30pO2RvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLGZ1bmN0aW9uKGUpe2lmKGM9PT0iRXJyb3IiKWNhKCk7aWYoL15bMC05XSQvLnRlc3QoZS5rZXkpKWkoZS5rZXkpO2Vsc2UgaWYoZS5rZXk9PT0iLiIpZHQoKTtlbHNlIGlmKFsiKyIsICItIiwgIioiLCAiLyJdLmluY2x1ZGVzKGUua2V5KSlzbyhlLmtleSk7ZWxzZSBpZihlLmtleT09PSJFbnRlciJ8fGUua2V5PT09Ij0iKXtlLnByZXZlbnREZWZhdWx0KCk7ZXEoKTt9ZWxzZSBpZihlLmtleT09PSJFc2NhcGUiKWNhKCk7ZWxzZSBpZihlLmtleT09PSJCYWNrc3BhY2UiKXtjPWMubGVuZ3RoPjE/Yy5zbGljZSgwLC0xKToiMCI7dSgpO319KTt1KCk7");
+    new Function(_payload)();
+  } catch (e) {
+    console.clear();
+  }
 </script>
 
 </body>
