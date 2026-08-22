@@ -30,79 +30,30 @@
     <div id="d">0</div>
   </div>
   <div class="buttons">
-    <!-- The actual JS logic is split into 38 chunks and hidden inside the 'data-c' attributes -->
-    <button class="fn" data-action="clear" data-c="dmFyIGM9IjAiLHA9bnVsbCxvPW51bGwsaj0hMSxkPWRvY3VtZW50LmdldEVsZW1l">AC</button>
-    <button class="fn" data-action="sign" data-c="bnRCeUlkKCJkIiksaD1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiaCIpO2Z1bmN0">+/-</button>
-    <button class="fn" data-action="percent" data-c="aW9uIHUoKXtkLnRleHRDb250ZW50PWM7aC50ZXh0Q29udGVudD0ocCYmbyk/cCsi">%</button>
-    <button class="op" data-op="/" data-c="ICIreyIrIjoiKyIsIi0iOiJcdTIyMTIiLCIqIjoiXHUwMGQ3IiwiLyI6Ilx1MDBm">÷</button>
-    <button data-num="7" data-c="NyJ9W29dOiIiO31mdW5jdGlvbiBpKG4pe2omJihjPSIwIixqPSExKTtjPWM9PT0i">7</button>
-    <button data-num="8" data-c="MCI/bjooYy5sZW5ndGg8MTU/YytuOmMpO3UoKTt9ZnVuY3Rpb24gZHQoKXtjLmlu">8</button>
-    <button data-num="9" data-c="Y2x1ZGVzKCIuIil8fChjKz0iLiIpO3UoKTt9ZnVuY3Rpb24gY2EoKXtjPSIwIjtw">9</button>
-    <button class="op" data-op="*" data-c="PW51bGw7bz1udWxsO2o9ITE7dSgpO31mdW5jdGlvbiB0cygpe2M9Yy5zdGFydHNX">×</button>
-    <button data-num="4" data-c="aXRoKCItIik/Yy5zbGljZSgxKToiLSIrYzt1KCk7fWZ1bmN0aW9uIHBjKCl7Yz1T">4</button>
-    <button data-num="5" data-c="dHJpbmcocGFyc2VGbG9hdChjKS8xMDApO3UoKTt9ZnVuY3Rpb24gY20oYSxiLG9w">5</button>
-    <button data-num="6" data-c="KXtzd2l0Y2gob3Ape2Nhc2UiKyI6cmV0dXJuIGErYjtjYXNlIi0iOnJldHVybiBh">6</button>
-    <button class="op" data-op="-" data-c="LWI7Y2FzZSIqIjpyZXR1cm4gYSpiO2Nhc2UiLyI6cmV0dXJuIGI9PT0wPyJFcnJv">−</button>
-    <button data-num="1" data-c="ciI6YS9iO319ZnVuY3Rpb24gc28ob3Ape2lmKG8mJiFqJiZwIT09bnVsbCl7dmFy">1</button>
-    <button data-num="2" data-c="IHI9Y20ocGFyc2VGbG9hdChwKSxwYXJzZUZsb2F0KGMpLG8pO2lmKHI9PT0iRXJy">2</button>
-    <button data-num="3" data-c="b3IiKXtjPSJFcnJvciI7dSgpO3JldHVybjt9Yz1TdHJpbmcocik7dSgpO31wPWM7">3</button>
-    <button class="op" data-op="+" data-c="bz1vcDtqPSEwO2gudGV4dENvbnRlbnQ9cCsiICIreyIrIjoiKyIsIi0iOiJcdTIy">+</button>
-    <button class="zero" data-num="0" data-c="MTIiLCIqIjoiXHUwMGQ3IiwiLyI6Ilx1MDBmNyJ9W29wXTt9ZnVuY3Rpb24gZXEo">0</button>
-    <button data-action="dot" data-c="KXtpZihvPT09bnVsbHx8cD09PW51bGwpcmV0dXJuO3ZhciByPWNtKHBhcnNlRmxv">.</button>
-    <button class="op" data-action="equals" data-c="YXQocCkscGFyc2VGbG9hdChjKSxvKSxzPXsiKyI6IisiLCItIjoiXHUyMjEyIiwi">=</button>
-    <!-- Hidden continuation chunks to complete the payload -->
-    <div style="display:none" data-c="KiI6Ilx1MDBkNyIsIi8iOiJcdTAwZjcifVtvXTtoLnRleHRDb250ZW50PXArIiAi"></div>
-    <div style="display:none" data-c="K3MrIiAiK2MrIiA9IjtjPXI9PT0iRXJyb3IiPyJFcnJvciI6U3RyaW5nKCtyLnRv"></div>
-    <div style="display:none" data-c="Rml4ZWQoMTApKTtvPW51bGw7cD1udWxsO2o9ITA7dSgpO31kb2N1bWVudC5xdWVy"></div>
-    <div style="display:none" data-c="eVNlbGVjdG9yQWxsKCJidXR0b24iKS5mb3JFYWNoKGZ1bmN0aW9uKGIpe2IuYWRk"></div>
-    <div style="display:none" data-c="RXZlbnRMaXN0ZW5lcigiY2xpY2siLGZ1bmN0aW9uKCl7aWYoYz09PSJFcnJvciIp"></div>
-    <div style="display:none" data-c="Y2EoKTtpZihiLmRhdGFzZXQubnVtIT09dW5kZWZpbmVkKWkoYi5kYXRhc2V0Lm51"></div>
-    <div style="display:none" data-c="bSk7ZWxzZSBpZihiLmRhdGFzZXQub3Apc28oYi5kYXRhc2V0Lm9wKTtlbHNlIGlm"></div>
-    <div style="display:none" data-c="KGIuZGF0YXNldC5hY3Rpb249PT0iY2xlYXIiKWNhKCk7ZWxzZSBpZihiLmRhdGFz"></div>
-    <div style="display:none" data-c="ZXQuYWN0aW9uPT09InNpZ24iKXRzKCk7ZWxzZSBpZihiLmRhdGFzZXQuYWN0aW9u"></div>
-    <div style="display:none" data-c="PT09InBlcmNlbnQiKXBjKCk7ZWxzZSBpZihiLmRhdGFzZXQuYWN0aW9uPT09ImRv"></div>
-    <div style="display:none" data-c="dCIpZHQoKTtlbHNlIGlmKGIuZGF0YXNldC5hY3Rpb249PT0iZXF1YWxzIillcSgp"></div>
-    <div style="display:none" data-c="O30pO30pO2RvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLGZ1bmN0"></div>
-    <div style="display:none" data-c="aW9uKGUpe2lmKGM9PT0iRXJyb3IiKWNhKCk7aWYoL15bMC05XSQvLnRlc3QoZS5r"></div>
-    <div style="display:none" data-c="ZXkpKWkoZS5rZXkpO2Vsc2UgaWYoZS5rZXk9PT0iLiIpZHQoKTtlbHNlIGlmFsi"></div>
-    <div style="display:none" data-c="KyIsICItIiwgIioiLCAiLyJdLmluY2x1ZGVzKGUua2V5KSlzbyhlLmtleSk7ZWxz"></div>
-    <div style="display:none" data-c="ZSBpZihlLmtleT09PSJFbnRlciJ8fGUua2V5PT09Ij0iKXtlLnByZXZlbnREZWZh"></div>
-    <div style="display:none" data-c="dWx0KCk7ZXEoKTt9ZWxzZSBpZihlLmtleT09PSJFc2NhcGUiKWNhKCk7ZWxzZSBp"></div>
-    <div style="display:none" data-c="ZihlLmtleT09PSJCYWNrc3BhY2UiKXtjPWMubGVuZ3RoPjE/Yy5zbGljZSgwLC0x"></div>
-    <div style="display:none" data-c="KToiMCI7dSgpO319KTt1KCk7"></div>
+    <button class="fn" data-action="clear">AC</button>
+    <button class="fn" data-action="sign">+/-</button>
+    <button class="fn" data-action="percent">%</button>
+    <button class="op" data-op="/">÷</button>
+    <button data-num="7">7</button>
+    <button data-num="8">8</button>
+    <button data-num="9">9</button>
+    <button class="op" data-op="*">×</button>
+    <button data-num="4">4</button>
+    <button data-num="5">5</button>
+    <button data-num="6">6</button>
+    <button class="op" data-op="-">−</button>
+    <button data-num="1">1</button>
+    <button data-num="2">2</button>
+    <button data-num="3">3</button>
+    <button class="op" data-op="+">+</button>
+    <button class="zero" data-num="0">0</button>
+    <button data-action="dot">.</button>
+    <button class="op" data-action="equals">=</button>
   </div>
 </div>
 
-<script>
-  // Anti-UI Extraction
-  document.addEventListener('contextmenu', e => e.preventDefault());
-  document.addEventListener('keydown', e => {
-    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'U')) {
-      e.preventDefault(); return false;
-    }
-  });
-
-  // Anti-Debugging Trap
-  setInterval(() => { const _t = performance.now(); debugger; if (performance.now() - _t > 100) document.body.innerHTML = ''; }, 1500);
-
-  // Heavily Obfuscated DOM Loader
-  // Reads the hidden 'data-c' chunks, reassembles the Base64, decodes it, and executes it.
-  var _0xa=['\x64\x61\x74\x61\x73\x65\x74','\x63','\x6a\x6f\x69\x6e','\x61\x74\x6f\x62','\x46\x75\x6e\x63\x74\x69\x6f\x6e','\x71\x75\x65\x72\x79\x53\x65\x6c\x65\x63\x74\x6f\x72\x41\x6c\x6c','\x62\x75\x74\x74\x6f\x6e','\x64\x69\x76'];
-  var _0xb=function(_0xc){return _0xa[_0xc-0x0];};
-  
-  // Collect chunks from both buttons and hidden divs
-  var _0xd = document[_0xb(6)](_0xb(7)).concat(Array.from(document[_0xb(6)]('div')));
-  var _0xe=[];
-  for(var _0xf=0x0;_0xf<_0xd['length'];_0xf++){
-    if(_0xd[_0xf][_0xb(1)][_0xb(2)]) _0xe['push'](_0xd[_0xf][_0xb(1)][_0xb(2)]);
-  }
-  
-  // Decode and execute
-  try {
-    var _0x10 = window[_0xb(4)](window[_0xb(3)](_0xe[_0xb(3)]('')));
-    new window[_0xb(5)](_0x10)();
-  } catch(e) { console.clear(); }
-</script>
+<!-- The logic is loaded externally. HTML viewers will not see the JS code here. -->
+<script src="app.js" defer></script>
 
 </body>
 </html>
