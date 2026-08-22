@@ -1,211 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculator</title>
-  <meta name="description" content="A simple online calculator" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      padding: 20px;
-    }
-    .calculator {
-      background: #1e1e2e;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-      width: 100%;
-      max-width: 360px;
-    }
-    .display {
-      background: #2a2a3e;
-      color: #fff;
-      font-size: 2.2rem;
-      text-align: right;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      min-height: 80px;
-      word-wrap: break-word;
-      word-break: break-all;
-      font-weight: 300;
-    }
-    .history {
-      color: #888;
-      font-size: 0.9rem;
-      min-height: 20px;
-      text-align: right;
-      margin-bottom: 6px;
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    button {
-      border: none;
-      border-radius: 12px;
-      padding: 20px 0;
-      font-size: 1.2rem;
-      cursor: pointer;
-      background: #3a3a52;
-      color: #fff;
-      transition: transform 0.08s, background 0.15s;
-      font-weight: 500;
-    }
-    button:hover { background: #4a4a66; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #121212; }
+    .calculator { width: 320px; background: #1e1e1e; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .display { text-align: right; padding: 20px 10px; margin-bottom: 20px; }
+    #h { color: #888; font-size: 1.2rem; min-height: 1.5rem; margin-bottom: 5px; word-wrap: break-word; }
+    #d { color: #fff; font-size: 3rem; font-weight: 300; word-wrap: break-word; }
+    .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    button { border: none; outline: none; background: #2d2d2d; color: #fff; font-size: 1.5rem; padding: 20px; border-radius: 50%; cursor: pointer; transition: background 0.2s, transform 0.1s; user-select: none; }
     button:active { transform: scale(0.95); }
-    .op { background: #ff9500; color: #fff; }
-    .op:hover { background: #ffaa33; }
-    .fn { background: #505068; color: #fff; }
-    .fn:hover { background: #606078; }
-    .equals { background: #34c759; color: #fff; }
-    .equals:hover { background: #4cd76a; }
-    .zero { grid-column: span 2; }
+    button:hover { background: #3d3d3d; }
+    .op { background: #ff9f0a; color: #fff; }
+    .op:hover { background: #ffb03b; }
+    .fn { background: #a5a5a5; color: #000; }
+    .fn:hover { background: #d4d4d4; }
+    .zero { grid-column: span 2; border-radius: 40px; text-align: left; padding-left: 30px; }
   </style>
 </head>
 <body>
-  <div class="calculator">
-    <div class="history" id="history"></div>
-    <div class="display" id="display">0</div>
-    <div class="buttons">
-      <button class="fn" data-action="clear">AC</button>
-      <button class="fn" data-action="sign">±</button>
-      <button class="fn" data-action="percent">%</button>
-      <button class="op" data-op="/">÷</button>
 
-      <button data-num="7">7</button>
-      <button data-num="8">8</button>
-      <button data-num="9">9</button>
-      <button class="op" data-op="*">×</button>
-
-      <button data-num="4">4</button>
-      <button data-num="5">5</button>
-      <button data-num="6">6</button>
-      <button class="op" data-op="-">−</button>
-
-      <button data-num="1">1</button>
-      <button data-num="2">2</button>
-      <button data-num="3">3</button>
-      <button class="op" data-op="+">+</button>
-
-      <button class="zero" data-num="0">0</button>
-      <button data-action="dot">.</button>
-      <button class="equals" data-action="equals">=</button>
-    </div>
+<div class="calculator">
+  <div class="display">
+    <div id="h"></div>
+    <div id="d">0</div>
   </div>
+  <div class="buttons">
+    <button class="fn" data-action="clear">AC</button>
+    <button class="fn" data-action="sign">+/-</button>
+    <button class="fn" data-action="percent">%</button>
+    <button class="op" data-op="/">÷</button>
+    
+    <button data-num="7">7</button>
+    <button data-num="8">8</button>
+    <button data-num="9">9</button>
+    <button class="op" data-op="*">×</button>
+    
+    <button data-num="4">4</button>
+    <button data-num="5">5</button>
+    <button data-num="6">6</button>
+    <button class="op" data-op="-">−</button>
+    
+    <button data-num="1">1</button>
+    <button data-num="2">2</button>
+    <button data-num="3">3</button>
+    <button class="op" data-op="+">+</button>
+    
+    <button class="zero" data-num="0">0</button>
+    <button data-action="dot">.</button>
+    <button class="op" data-action="equals">=</button>
+  </div>
+</div>
 
-  <script>
-    const display = document.getElementById('display');
-    const history = document.getElementById('history');
-    let current = '0';
-    let previous = null;
-    let operator = null;
-    let justEvaluated = false;
+<script>
+var _0x1a=["\x63\x6C\x65\x61\x72","\x73\x69\x67\x6E","\x70\x65\x72\x63\x65\x6E\x74","\x64\x6F\x74","\x65\x71\x75\x61\x6C\x73","\x6E\x75\x6D","\x6F\x70","\x61\x63\x74\x69\x6F\x6E"],c="0",p=null,o=null,j=!1,d=document.getElementById("d"),h=document.getElementById("h");function u(){d.textContent=c;h.textContent=(p&&o)?`${p}\x20${{"+": "+", "-": "\u2212", "*": "\u00d7", "/": "\u00f7"}[o]}`:"";}function i(n){j&&(c="0",j=!1);c=c==="0"?n:(c.length<15?c+n:c);u();}function dt(){c.includes(".")||(c+=".");u();}function ca(){c="0";p=null;o=null;j=!1;u();}function ts(){c=c.startsWith("-")?c.slice(1):"-"+c;u();}function pc(){c=String(parseFloat(c)/100);u();}function cm(a,b,op){switch(op){case"+":return a+b;case"-":return a-b;case"*":return a*b;case"/":return b===0?"Error":a/b;}}function so(op){if(o&&!j&&p!==null){let r=cm(parseFloat(p),parseFloat(c),o);if(r==="Error"){c="Error";u();return;}c=String(r);u();}p=c;o=op;j=!0;h.textContent=`${p}\x20${{"+": "+", "-": "\u2212", "*": "\u00d7", "/": "\u00f7"}[op]}`;}function eq(){if(o===null||p===null)return;let r=cm(parseFloat(p),parseFloat(c),o),s={"+": "+", "-": "\u2212", "*": "\u00d7", "/": "\u00f7"}[o];h.textContent=`${p}\x20${s}\x20${c}\x20=`;c=r==="Error"?"Error":String(+r.toFixed(10));o=null;p=null;j=!0;u();}document.querySelectorAll("button").forEach(b=>{b.addEventListener("click",()=>{if(c==="Error")ca();if(b.dataset[_0x1a[5]]!==undefined)i(b.dataset[_0x1a[5]]);else if(b.dataset[_0x1a[6]])so(b.dataset[_0x1a[6]]);else if(b.dataset[_0x1a[7]]===_0x1a[0])ca();else if(b.dataset[_0x1a[7]]===_0x1a[1])ts();else if(b.dataset[_0x1a[7]]===_0x1a[2])pc();else if(b.dataset[_0x1a[7]]===_0x1a[3])dt();else if(b.dataset[_0x1a[7]]===_0x1a[4])eq();});});document.addEventListener("keydown",e=>{if(c==="Error")ca();if(/^[0-9]$/.test(e.key))i(e.key);else if(e.key===".")dt();else if(["+", "-", "*", "/"].includes(e.key))so(e.key);else if(e.key==="Enter"||e.key==="="){e.preventDefault();eq();}else if(e.key==="Escape")ca();else if(e.key==="Backspace"){c=c.length>1?c.slice(0,-1):"0";u();}});u();
+</script>
 
-    function updateDisplay() {
-      display.textContent = current;
-    }
-
-    function inputNumber(n) {
-      if (justEvaluated) { current = '0'; justEvaluated = false; }
-      current = current === '0' ? n : current + n;
-      updateDisplay();
-    }
-
-    function inputDot() {
-      if (justEvaluated) { current = '0'; justEvaluated = false; }
-      if (!current.includes('.')) current += '.';
-      updateDisplay();
-    }
-
-    function clearAll() {
-      current = '0';
-      previous = null;
-      operator = null;
-      history.textContent = '';
-      updateDisplay();
-    }
-
-    function toggleSign() {
-      if (current === '0') return;
-      current = current.startsWith('-') ? current.slice(1) : '-' + current;
-      updateDisplay();
-    }
-
-    function percent() {
-      current = String(parseFloat(current) / 100);
-      updateDisplay();
-    }
-
-    function compute(a, b, op) {
-      switch (op) {
-        case '+': return a + b;
-        case '-': return a - b;
-        case '*': return a * b;
-        case '/': return b === 0 ? 'Error' : a / b;
-      }
-    }
-
-    function setOperator(op) {
-      if (operator && !justEvaluated && previous !== null) {
-        const result = compute(parseFloat(previous), parseFloat(current), operator);
-        if (result === 'Error') { current = 'Error'; updateDisplay(); return; }
-        current = String(result);
-        updateDisplay();
-      }
-      previous = current;
-      operator = op;
-      justEvaluated = true;
-      const sym = { '+': '+', '-': '−', '*': '×', '/': '÷' }[op];
-      history.textContent = `${previous} ${sym}`;
-    }
-
-    function equals() {
-      if (operator === null || previous === null) return;
-      const result = compute(parseFloat(previous), parseFloat(current), operator);
-      const sym = { '+': '+', '-': '−', '*': '×', '/': '÷' }[operator];
-      history.textContent = `${previous} ${sym} ${current} =`;
-      current = result === 'Error' ? 'Error' : String(+result.toFixed(10));
-      operator = null;
-      previous = null;
-      justEvaluated = true;
-      updateDisplay();
-    }
-
-    document.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (current === 'Error') clearAll();
-        if (btn.dataset.num !== undefined) inputNumber(btn.dataset.num);
-        else if (btn.dataset.op) setOperator(btn.dataset.op);
-        else if (btn.dataset.action === 'clear') clearAll();
-        else if (btn.dataset.action === 'sign') toggleSign();
-        else if (btn.dataset.action === 'percent') percent();
-        else if (btn.dataset.action === 'dot') inputDot();
-        else if (btn.dataset.action === 'equals') equals();
-      });
-    });
-
-    // Keyboard support
-    document.addEventListener('keydown', (e) => {
-      if (current === 'Error') clearAll();
-      if (/^[0-9]$/.test(e.key)) inputNumber(e.key);
-      else if (e.key === '.') inputDot();
-      else if (['+', '-', '*', '/'].includes(e.key)) setOperator(e.key);
-      else if (e.key === 'Enter' || e.key === '=') { e.preventDefault(); equals(); }
-      else if (e.key === 'Escape') clearAll();
-      else if (e.key === 'Backspace') {
-        current = current.length > 1 ? current.slice(0, -1) : '0';
-        updateDisplay();
-      }
-    });
-  </script>
 </body>
 </html>
