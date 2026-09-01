@@ -39,125 +39,37 @@
             border: 1px solid #e5e7eb;
         }
 
-        h2 {
-            margin: 0 0 1.5rem 0;
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
+        h2 { margin: 0 0 1.5rem 0; font-size: 1.5rem; text-align: center; }
+        .subtitle { text-align: center; color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
+        
         input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: all 0.2s;
+            width: 100%; padding: 12px 16px; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 1rem; box-sizing: border-box; transition: all 0.2s;
         }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        input.otp-input {
-            text-align: center;
-            font-size: 1.5rem;
-            letter-spacing: 0.5rem;
-            font-weight: bold;
-        }
-
+        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        
+        input.otp-input { text-align: center; font-size: 1.5rem; letter-spacing: 0.5rem; font-weight: bold; }
+        
         button {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            margin-top: 0.5rem;
+            width: 100%; padding: 12px; background-color: var(--primary); color: white;
+            border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: background-color 0.2s, transform 0.1s; margin-top: 0.5rem;
         }
-
-        button:hover:not(:disabled) {
-            background-color: var(--primary-hover);
-        }
-
-        button:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-
-        button:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 1.25rem;
-            font-size: 0.9rem;
-            text-align: center;
-            display: none;
-        }
-
-        .message.error {
-            background-color: #fee2e2;
-            color: var(--error);
-            display: block;
-        }
-
-        .message.success {
-            background-color: #d1fae5;
-            color: #065f46;
-            display: block;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .link-group {
-            margin-top: 1.5rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .email-display {
-            font-weight: bold;
-            color: var(--text);
-        }
+        button:hover:not(:disabled) { background-color: var(--primary-hover); }
+        button:active:not(:disabled) { transform: scale(0.98); }
+        button:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        
+        .message { padding: 12px; border-radius: 8px; margin-bottom: 1.25rem; font-size: 0.9rem; text-align: center; display: none; }
+        .message.error { background-color: #fee2e2; color: var(--error); display: block; }
+        .message.success { background-color: #d1fae5; color: #065f46; display: block; }
+        .hidden { display: none !important; }
+        
+        .link-group { margin-top: 1.5rem; text-align: center; font-size: 0.9rem; }
+        a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        a:hover { text-decoration: underline; }
+        .email-display { font-weight: bold; color: var(--text); }
     </style>
 </head>
 <body>
@@ -173,7 +85,8 @@
                 <label for="emailInput">Email Address</label>
                 <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email">
             </div>
-            <button id="sendBtn" onclick="requestOTP()">Send OTP Code</button>
+            <!-- type="button" prevents accidental page reloads -->
+            <button type="button" id="sendBtn" onclick="requestOTP(event)">Send OTP Code</button>
         </div>
 
         <!-- STEP 2: OTP ENTRY -->
@@ -183,11 +96,11 @@
                 <label for="otpInput">Verification Code</label>
                 <input type="text" id="otpInput" class="otp-input" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
             </div>
-            <button id="verifyBtn" onclick="verifyOTP()">Verify & Login</button>
+            <button type="button" id="verifyBtn" onclick="verifyOTP(event)">Verify & Login</button>
             <div class="link-group">
                 <a href="#" onclick="goBackToEmail(); return false;">Change email</a> 
                 &nbsp;|&nbsp; 
-                <a href="#" onclick="requestOTP(); return false;" id="resendLink">Resend code</a>
+                <a href="#" onclick="requestOTP(event); return false;" id="resendLink">Resend code</a>
             </div>
         </div>
     </div>
@@ -196,15 +109,9 @@
         // ==========================================
         // CONFIGURATION - PASTE YOUR URLS HERE
         // ==========================================
-        
-        // 1. Paste your Pipedream "Request OTP" Webhook URL here
-        const REQUEST_OTP_URL = 'https://eocfcytsk9bh13n.m.pipedream.net';
-        
-        // 2. Paste your Pipedream "Verify OTP" Webhook URL here
-        const VERIFY_OTP_URL = 'https://eoarua3rliiv9et.m.pipedream.net';
-        
-        // 3. Paste the website URL you want to redirect to after successful login
-        const REDIRECT_URL = 'www.google.com'; 
+        const REQUEST_OTP_URL = ''; // 👈 Paste Workflow 1 URL
+        const VERIFY_OTP_URL = 'https://eocfcytsk9bh13n.m.pipedream.net';  // 👈 Paste Workflow 2 URL
+        const REDIRECT_URL = 'https://myotp.app/dashboard';                    // 👈 Your destination website
         // ==========================================
 
         const messageDiv = document.getElementById('message');
@@ -216,7 +123,6 @@
         const verifyBtn = document.getElementById('verifyBtn');
         const emailDisplay = document.getElementById('emailDisplay');
 
-        // Helper to show messages
         function showMessage(text, type) {
             messageDiv.textContent = text;
             messageDiv.className = `message ${type}`;
@@ -227,7 +133,6 @@
             messageDiv.textContent = '';
         }
 
-        // Go back to email step
         function goBackToEmail() {
             otpStep.classList.add('hidden');
             emailStep.classList.remove('hidden');
@@ -235,7 +140,8 @@
         }
 
         // STEP 1: Request OTP
-        async function requestOTP() {
+        async function requestOTP(event) {
+            if (event) event.preventDefault(); // Stops page from reloading
             clearMessage();
             const email = emailInput.value.trim();
 
@@ -250,7 +156,7 @@
                 const response = await fetch(REQUEST_OTP_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({ email: email })
                 });
 
                 const data = await response.json();
@@ -258,17 +164,16 @@
                 if (response.ok) {
                     showMessage('OTP sent successfully! Check your email.', 'success');
                     emailDisplay.textContent = email;
-                    
-                    // Switch UI to OTP step
                     emailStep.classList.add('hidden');
                     otpStep.classList.remove('hidden');
-                    otpInput.value = ''; // Clear old OTPs
+                    otpInput.value = '';
                     otpInput.focus();
                 } else {
-                    showMessage(data.error || 'Failed to send OTP. Please try again.', 'error');
+                    showMessage(data.error || 'Failed to send OTP.', 'error');
                 }
             } catch (error) {
-                showMessage('Network error. Please check your connection.', 'error');
+                showMessage('Network error. Check console (F12) for details.', 'error');
+                console.error("Fetch error:", error);
             } finally {
                 sendBtn.disabled = false;
                 sendBtn.textContent = 'Send OTP Code';
@@ -276,7 +181,8 @@
         }
 
         // STEP 2: Verify OTP
-        async function verifyOTP() {
+        async function verifyOTP(event) {
+            if (event) event.preventDefault(); // Stops page from reloading
             clearMessage();
             const email = emailInput.value.trim();
             const otp = otpInput.value.trim();
@@ -292,18 +198,14 @@
                 const response = await fetch(VERIFY_OTP_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, otp })
+                    body: JSON.stringify({ email: email, otp: otp })
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
                     showMessage('Login successful! Redirecting...', 'success');
-                    
-                    // Save the token locally if needed by your destination website
                     localStorage.setItem('authToken', data.token);
-                    
-                    // Redirect to the target website after a short delay
                     setTimeout(() => {
                         window.location.href = REDIRECT_URL;
                     }, 1000);
@@ -313,7 +215,8 @@
                     otpInput.focus();
                 }
             } catch (error) {
-                showMessage('Network error. Please check your connection.', 'error');
+                showMessage('Network error. Check console (F12) for details.', 'error');
+                console.error("Fetch error:", error);
             } finally {
                 verifyBtn.disabled = false;
                 verifyBtn.textContent = 'Verify & Login';
@@ -321,13 +224,16 @@
         }
 
         // Allow pressing "Enter" to submit
-        emailInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') requestOTP(); });
-        otpInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') verifyOTP(); });
+        emailInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') requestOTP(e); });
         
-        // Auto-format OTP input (only allow numbers)
+        // AUTO-VERIFY: Triggers as soon as 6 digits are typed
         otpInput.addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Only allow numbers
+            if (e.target.value.length === 6) {
+                verifyOTP(); // Auto-submit!
+            }
         });
+        otpInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') verifyOTP(e); });
     </script>
 </body>
 </html>
