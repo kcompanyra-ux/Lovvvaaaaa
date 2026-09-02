@@ -1,4 +1,281 @@
-function renderTickets(tickets) {
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exclusive Event Tickets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@100..900&family=Fira+Code:wght@300..700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link id="theme-fonts" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+    <style type="text/tailwindcss">
+      @import "tailwindcss";
+      @theme inline {
+        --color-background: var(--background);
+        --color-foreground: var(--foreground);
+        --color-primary: var(--primary);
+        --color-primary-foreground: var(--primary-foreground);
+        --color-secondary: var(--secondary);
+        --color-secondary-foreground: var(--secondary-foreground);
+        --color-tertiary: var(--tertiary);
+        --color-tertiary-foreground: var(--tertiary-foreground);
+        --color-muted: var(--muted);
+        --color-muted-foreground: var(--muted-foreground);
+        --color-accent: var(--accent);
+        --color-accent-foreground: var(--accent-foreground);
+        --color-destructive: var(--destructive);
+        --color-destructive-foreground: var(--destructive-foreground);
+        --color-card: var(--card);
+        --color-card-foreground: var(--card-foreground);
+        --color-popover: var(--popover);
+        --color-popover-foreground: var(--popover-foreground);
+        --color-border: var(--border);
+        --color-input: var(--input);
+        --color-ring: var(--ring);
+        --radius-sm: calc(var(--radius) - 4px);
+        --radius-md: calc(var(--radius) - 2px);
+        --radius-lg: var(--radius);
+        --font-heading: var(--font-heading, var(--font-sans, ui-sans-serif, system-ui, sans-serif));
+      }
+      @layer base {
+        .bg-card { color: var(--card-foreground); }
+        .bg-popover { color: var(--popover-foreground, var(--card-foreground)); }
+        .bg-primary { color: var(--primary-foreground); }
+        .bg-secondary { color: var(--secondary-foreground); }
+        .bg-accent { color: var(--accent-foreground, var(--foreground)); }
+        .bg-tertiary { color: var(--tertiary-foreground, var(--primary-foreground)); }
+        .bg-destructive { color: var(--destructive-foreground, var(--primary-foreground)); }
+        .bg-muted { color: var(--muted-foreground); }
+      }
+      :root {
+        --background: #F7F8FC;
+        --foreground: #172033;
+        --primary: #3D4CFF;
+        --primary-foreground: #FFFFFF;
+        --secondary: #E9ECFF;
+        --secondary-foreground: #172033;
+        --tertiary: #00A884;
+        --muted: #EEF1F6;
+        --muted-foreground: #656E81;
+        --accent: #FFF1D6;
+        --accent-foreground: #172033;
+        --card: #FFFFFF;
+        --card-foreground: #172033;
+        --destructive: #D94B4B;
+        --border: #DDE2EC;
+        --input: #DDE2EC;
+        --ring: #3D4CFF;
+        --radius: 0.9rem;
+        --font-sans: Inter,sans-serif;
+        --font-heading: Inter,sans-serif;
+        --font-mono: JetBrains Mono, monospace;
+        --shadow-offset-x: 0;
+        --shadow-offset-y: 10;
+        --shadow-blur: 30;
+        --shadow-spread: -8;
+        --shadow-color: rgba(15, 23, 42, 0.12);
+        --tertiary-foreground: #2D2D2D;
+        --destructive-foreground: #121212;
+        --primary-text: #3D4CFF;
+        --secondary-text: #6F7182;
+        --tertiary-text: #008261;
+        --accent-text: #7E715A;
+        --destructive-text: #CD3F41;
+      }
+      .brand-gradient { background-image: linear-gradient(135deg, var(--primary), var(--accent)); }
+      .shadow-theme {
+        box-shadow:
+          calc(var(--shadow-offset-x, 0) * 1px) calc(var(--shadow-offset-y, 10) * 1px)
+          calc(var(--shadow-blur, 30) * 1px) calc(var(--shadow-spread, -8) * 1px)
+          var(--shadow-color, rgba(15, 23, 42, 0.12));
+      }
+      .text-primary { color: var(--primary-text, var(--primary)); }
+      .text-secondary { color: var(--secondary-text, var(--secondary)); }
+      .text-tertiary { color: var(--tertiary-text, var(--tertiary)); }
+      .text-accent { color: var(--accent-text, var(--accent)); }
+      .text-destructive { color: var(--destructive-text, var(--destructive)); }
+    </style>
+  </head>
+  <body class="min-h-screen w-full bg-background flex flex-col relative font-sans text-foreground">
+    
+    <!-- Header -->
+    <header class="border-b border-border bg-card sticky top-0 z-40">
+      <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-lg font-heading font-bold text-primary-foreground shadow-theme">
+            <span id="headerTicketCount">--</span>
+          </div>
+          <div>
+            <p class="font-heading font-bold text-lg">Tickets Remaining</p>
+            <p class="text-xs text-muted-foreground">Secure your spot now</p>
+          </div>
+        </div>
+        <nav class="hidden items-center gap-6 text-sm font-medium lg:flex">
+          <a href="#" class="hover:text-primary transition-colors">Event Details</a>
+          <a href="#" class="hover:text-primary transition-colors">FAQ</a>
+          <a href="#" class="hover:text-primary transition-colors">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
+      <div class="grid items-start gap-10 lg:grid-cols-2">
+        
+        <!-- Left: Hero Text -->
+        <section>
+          <div class="mb-5 inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground">
+            <iconify-icon icon="lucide:ticket" class="text-lg text-primary"></iconify-icon> 
+            <span id="statusBadge">Loading availability...</span>
+          </div>
+          <h1 class="text-balance text-4xl font-heading font-bold leading-tight text-foreground">
+            Find your ticket. <br/>Keep every detail in sight.
+          </h1>
+          <p class="mt-5 max-w-xl text-pretty text-lg text-muted-foreground">
+            Select an available ticket below, enter your details, and instantly receive a secure PDF ticket delivered to your device.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-5 text-sm">
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="lucide:circle-check" class="text-xl text-tertiary"></iconify-icon> 
+              <span>Instant PDF delivery</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="lucide:shield-check" class="text-xl text-tertiary"></iconify-icon> 
+              <span>Secure real-time claiming</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="lucide:smartphone" class="text-xl text-tertiary"></iconify-icon> 
+              <span>Mobile-friendly entry</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right: Ticket Selection Card -->
+        <section class="rounded-xl border border-border bg-card p-6 shadow-theme">
+          <div class="mb-6 flex items-center justify-between">
+            <h2 class="text-lg font-heading font-semibold">Select a Ticket</h2>
+            <span class="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">Limited Edition</span>
+          </div>
+          
+          <div id="ticketGrid" class="grid grid-cols-4 sm:grid-cols-5 gap-3 max-h-96 overflow-y-auto p-2 mb-4">
+            <!-- Tickets will be injected here by JavaScript -->
+            <div class="col-span-full text-center text-muted-foreground py-8">Loading tickets...</div>
+          </div>
+
+          <div id="soldOutMessage" class="hidden text-center py-8">
+            <iconify-icon icon="lucide:alert-circle" class="text-4xl text-destructive mb-2"></iconify-icon>
+            <p class="font-heading font-semibold text-lg">Sold Out</p>
+            <p class="text-sm text-muted-foreground">All tickets have been claimed.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Bottom Features -->
+      <section class="mt-16 grid gap-4 md:grid-cols-3">
+        <div class="rounded-xl bg-card border border-border p-5 shadow-theme">
+          <iconify-icon icon="lucide:zap" class="text-2xl text-primary"></iconify-icon>
+          <h2 class="mt-3 text-lg font-heading font-semibold">Claim in seconds</h2>
+          <p class="mt-2 text-sm text-muted-foreground">One click to reserve, one form to fill. Your ticket is secured instantly.</p>
+        </div>
+        <div class="rounded-xl bg-card border border-border p-5 shadow-theme">
+          <iconify-icon icon="lucide:file-down" class="text-2xl text-primary"></iconify-icon>
+          <h2 class="mt-3 text-lg font-heading font-semibold">Auto-download PDF</h2>
+          <p class="mt-2 text-sm text-muted-foreground">No waiting for emails. Your personalized ticket PDF downloads immediately.</p>
+        </div>
+        <div class="rounded-xl bg-card border border-border p-5 shadow-theme">
+          <iconify-icon icon="lucide:users" class="text-2xl text-primary"></iconify-icon>
+          <h2 class="mt-3 text-lg font-heading font-semibold">Real-time sync</h2>
+          <p class="mt-2 text-sm text-muted-foreground">When a ticket is taken, it updates for everyone, everywhere.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Claim Modal -->
+    <div id="claimModal" class="hidden fixed inset-0 bg-foreground/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div class="bg-card border border-border rounded-xl p-6 shadow-theme w-full max-w-md animate-in fade-in zoom-in-95 duration-200">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-heading font-bold">Claim Ticket #<span id="modalTicketId" class="text-primary"></span></h2>
+          <button onclick="closeModal()" class="text-muted-foreground hover:text-foreground transition-colors">
+            <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+          </button>
+        </div>
+        
+        <form id="claimForm" class="space-y-4">
+          <div>
+            <label class="text-sm font-semibold block mb-1">Full Name</label>
+            <div class="flex items-center gap-3 rounded-lg border border-input bg-background px-3 min-h-12">
+              <iconify-icon icon="lucide:user" class="text-lg text-muted-foreground"></iconify-icon>
+              <input type="text" id="userName" placeholder="John Doe" required class="w-full bg-transparent border-none outline-none text-sm h-full">
+            </div>
+          </div>
+          
+          <div>
+            <label class="text-sm font-semibold block mb-1">Email Address</label>
+            <div class="flex items-center gap-3 rounded-lg border border-input bg-background px-3 min-h-12">
+              <iconify-icon icon="lucide:mail" class="text-lg text-muted-foreground"></iconify-icon>
+              <input type="email" id="userEmail" placeholder="john@example.com" required class="w-full bg-transparent border-none outline-none text-sm h-full">
+            </div>
+          </div>
+
+          <p id="formError" class="text-sm text-destructive hidden text-center"></p>
+
+          <button type="submit" id="submitBtn" class="w-full min-h-12 rounded-lg bg-primary px-5 font-semibold text-primary-foreground shadow-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+            <span>Confirm & Download PDF</span>
+            <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+          </button>
+          
+          <button type="button" onclick="closeModal()" class="w-full min-h-12 rounded-lg border border-border bg-background px-5 font-semibold text-foreground hover:bg-muted transition-colors">
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // CONFIGURATION
+      // ==========================================
+      // 👇 REPLACE THIS WITH YOUR ACTUAL PIPEDREAM URL 👇
+      const PIPEDREAM_URL = "YOUR_PIPEDREAM_WEBHOOK_URL_HERE"; 
+
+      let selectedTicketId = null;
+
+      // ==========================================
+      // APP LOGIC
+      // ==========================================
+      async function loadTickets() {
+        const statusBadge = document.getElementById('statusBadge');
+        const headerCount = document.getElementById('headerTicketCount');
+        const grid = document.getElementById('ticketGrid');
+        const soldOutMsg = document.getElementById('soldOutMessage');
+
+        statusBadge.innerText = "Connecting to database...";
+        grid.innerHTML = '<div class="col-span-full text-center text-muted-foreground py-8">Loading tickets...</div>';
+
+        try {
+          const response = await fetch(PIPEDREAM_URL, {
+            method: 'GET',
+            mode: 'cors',
+            headers: { 'Accept': 'application/json' }
+          });
+          
+          if (!response.ok) throw new Error(`Server error: ${response.status}`);
+          
+          const tickets = await response.json();
+          renderTickets(tickets);
+        } catch (error) {
+          statusBadge.innerText = "Connection failed";
+          statusBadge.parentElement.classList.replace('bg-secondary', 'bg-destructive');
+          statusBadge.parentElement.classList.replace('text-secondary-foreground', 'text-destructive-foreground');
+          grid.innerHTML = '<div class="col-span-full text-center text-destructive py-8">Error loading tickets. Check console (F12).</div>';
+          console.error("Fetch Error:", error);
+        }
+      }
+
+      function renderTickets(tickets) {
         const statusBadge = document.getElementById('statusBadge');
         const headerCount = document.getElementById('headerTicketCount');
         const grid = document.getElementById('ticketGrid');
@@ -27,12 +304,12 @@ function renderTickets(tickets) {
           const btn = document.createElement('button');
           
           if (ticket.status === 'available') {
-            // Available ticket styling
+            // Available ticket styling (Clickable, Blue)
             btn.className = 'min-h-12 rounded-lg bg-primary px-4 font-semibold text-primary-foreground shadow-md hover:bg-primary/90 hover:scale-105 transition-all flex items-center justify-center';
             btn.innerText = `#${ticket.id}`;
             btn.onclick = () => openModal(ticket.id);
           } else {
-            // Booked/Taken ticket styling
+            // Booked/Taken ticket styling (Disabled, Gray, Strikethrough, X Icon)
             btn.className = 'min-h-12 rounded-lg bg-muted border border-border px-4 font-semibold text-muted-foreground cursor-not-allowed opacity-70 flex flex-col items-center justify-center gap-1';
             btn.disabled = true;
             btn.innerHTML = `
@@ -45,3 +322,101 @@ function renderTickets(tickets) {
           grid.appendChild(btn);
         });
       }
+
+      function openModal(ticketId) {
+        selectedTicketId = ticketId;
+        document.getElementById('modalTicketId').innerText = ticketId;
+        document.getElementById('claimModal').classList.remove('hidden');
+        document.getElementById('formError').classList.add('hidden');
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('submitBtn').innerHTML = '<span>Confirm & Download PDF</span><iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>';
+      }
+
+      function closeModal() {
+        document.getElementById('claimModal').classList.add('hidden');
+        document.getElementById('claimForm').reset();
+      }
+
+      document.getElementById('claimForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const submitBtn = document.getElementById('submitBtn');
+        const formError = document.getElementById('formError');
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="animate-spin text-lg"></iconify-icon> Processing...';
+        formError.classList.add('hidden');
+
+        try {
+          const response = await fetch(PIPEDREAM_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ ticketId: selectedTicketId, customerName: name, customerEmail: email })
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            generatePDF(name, selectedTicketId, email);
+            closeModal();
+            loadTickets(); 
+            alert(`Success! Ticket #${selectedTicketId} is yours. Check your downloads.`);
+          } else {
+            throw new Error(data.error || "Ticket was just taken by someone else.");
+          }
+        } catch (error) {
+          formError.innerText = error.message;
+          formError.classList.remove('hidden');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Confirm & Download PDF</span><iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>';
+        }
+      });
+
+      function generatePDF(name, ticketId, email) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Match the UI colors in the PDF
+        doc.setFillColor(61, 76, 255); // Primary color
+        doc.rect(0, 0, 210, 40, 'F'); 
+        
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(24);
+        doc.setFont("helvetica", "bold");
+        doc.text("EVENT TICKET", 105, 25, { align: 'center' });
+
+        doc.setTextColor(23, 32, 51); // Foreground color
+        doc.setFontSize(48);
+        doc.text(`#${ticketId}`, 105, 90, { align: 'center' });
+
+        doc.setFontSize(12);
+        doc.setTextColor(101, 110, 129); // Muted foreground
+        doc.text("ISSUED TO:", 30, 120);
+        doc.text("EMAIL:", 30, 150);
+        doc.text("DATE:", 30, 180);
+
+        doc.setFontSize(16);
+        doc.setTextColor(23, 32, 51);
+        doc.setFont("helvetica", "bold");
+        doc.text(name, 30, 132);
+        doc.text(email, 30, 162);
+        doc.text(new Date().toLocaleDateString(), 30, 192);
+
+        doc.setFillColor(255, 241, 214); // Accent color
+        doc.rect(0, 270, 210, 27, 'F');
+        doc.setTextColor(23, 32, 51);
+        doc.setFontSize(12);
+        doc.text("PRESENT THIS PDF AT THE ENTRANCE", 105, 285, { align: 'center' });
+
+        const safeName = name.replace(/\s+/g, '-');
+        doc.save(`Ticket-${ticketId}-${safeName}.pdf`);
+      }
+
+      // Start the app
+      loadTickets();
+    </script>
+  </body>
+</html>
