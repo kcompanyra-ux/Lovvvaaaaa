@@ -2,6 +2,15 @@ paths:
   uploads: uploads
   uploads_use_relative_path: false
   static: ''
+collections_config:
+  pages:
+    path: ''
+    icon: wysiwyg
+    disable_url: false
+    include_developer_files: false
+    disable_add: false
+    disable_add_folder: false
+    disable_file_actions: false
 _snippets_imports:
   jekyll: true
 timezone: Asia/Riyadh
